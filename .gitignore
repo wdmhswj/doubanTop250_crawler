@@ -26,3 +26,6 @@ go.work.sum
 
 # json file
 .json
+
+# csv file
+.csv
