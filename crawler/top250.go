@@ -136,7 +136,7 @@ func getComments(movie structs.Movie) (*structs.MovieComments, error) {
 
 	// 在request之前
 	c.OnRequest(func(r *colly.Request) {
-		fmt.Println("Visiting:", r.URL.String())
+		// fmt.Println("Visiting:", r.URL.String())
 
 		// 设置请求头
 		r.Headers.Set("Connection", "keep-alive")
@@ -159,14 +159,14 @@ func getComments(movie structs.Movie) (*structs.MovieComments, error) {
 	// 收到响应Response时
 	c.OnResponse(func(r *colly.Response) {
 		// 打印响应的状态码
-		fmt.Println("响应状态码:", r.StatusCode)
+		// fmt.Println("响应状态码:", r.StatusCode)
 
 		// 打印响应头
-		fmt.Println("响应头:", r.Headers)
+		// fmt.Println("响应头:", r.Headers)
 
 		// 打印响应体（HTML 或者其他数据）
 		// fmt.Println("响应体:", string(r.Body))
-		fmt.Println("响应体: 。。。")
+		// fmt.Println("响应体: 。。。")
 	})
 
 	c.OnHTML("div.comment", func(e *colly.HTMLElement) {
@@ -197,25 +197,25 @@ func getComments(movie structs.Movie) (*structs.MovieComments, error) {
 	// 热门，好评
 	for i := 0; i < 10; i++ {
 		url := strings.Replace(urlTemplate_hot_h, "*#*", fmt.Sprintf("%d", i*20), 1)
-		fmt.Println("url to visit:", url)
+		// fmt.Println("url to visit:", url)
 		c.Visit(url)
 	}
 	// 热门，一般
 	for i := 0; i < 10; i++ {
 		url := strings.Replace(urlTemplate_hot_m, "*#*", fmt.Sprintf("%d", i*20), 1)
-		fmt.Println("url to visit:", url)
+		// fmt.Println("url to visit:", url)
 		c.Visit(url)
 	}
 	// 热门，差评
 	for i := 0; i < 10; i++ {
 		url := strings.Replace(urlTemplate_hot_l, "*#*", fmt.Sprintf("%d", i*20), 1)
-		fmt.Println("url to visit:", url)
+		// fmt.Println("url to visit:", url)
 		c.Visit(url)
 	}
 	// 最新
 	for i := 0; i < 30; i++ {
 		url := strings.Replace(urlTemplate_new, "*#*", fmt.Sprintf("%d", i*20), 1)
-		fmt.Println("url to visit:", url)
+		// fmt.Println("url to visit:", url)
 		c.Visit(url)
 	}
 
