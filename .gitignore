@@ -25,7 +25,7 @@ go.work.sum
 .env
 
 # json file
-.json
+data/*.json
 
 # csv file
-.csv
+data/*.csv

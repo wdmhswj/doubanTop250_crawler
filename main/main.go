@@ -85,10 +85,10 @@ func main() {
 	movies := append(movies1, movies2...)
 
 	// 定义输出文件路径
-	outputCSVFilePath := "../data/merged_comments_2class.csv"
+	outputCSVFilePath := "../data/merged_comments_3class.csv"
 
 	// 将合并后的切片保存为 CSV 文件
-	err = saveAsCSV_2class(outputCSVFilePath, movies)
+	err = saveAsCSV_3class(outputCSVFilePath, movies)
 	if err != nil {
 		fmt.Println("写入 CSV 文件失败:", err)
 		return
@@ -251,6 +251,74 @@ func saveAsCSV_2class(filePath string, movies []structs.MovieComments) error {
 	return nil
 }
 
+func saveAsCSV_3class(filePath string, movies []structs.MovieComments) error {
+	file, err := os.Create(filePath)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	// 写入CSV文件的头
+	err = writer.Write([]string{"MovieName", "MoiveIndex", "UserRating", "UserComment"})
+	if err != nil {
+		return err
+	}
+
+	// 写入电影评论数据
+	for _, movie := range movies {
+		for _, comment := range movie.Comments {
+			if comment.UserRating == 3 {
+				record := []string{
+					movie.MovieName,
+					strconv.Itoa(movie.MoiveIndex),
+					"1",
+					comment.UserComment,
+				}
+				err = writer.Write(record)
+				if err != nil {
+					return err
+				}
+			} else if comment.UserRating < 3 {
+				record := []string{
+					movie.MovieName,
+					strconv.Itoa(movie.MoiveIndex),
+					"0",
+					comment.UserComment,
+				}
+				err = writer.Write(record)
+				if err != nil {
+					return err
+				}
+			} else {
+				record := []string{
+					movie.MovieName,
+					strconv.Itoa(movie.MoiveIndex),
+					"2",
+					comment.UserComment,
+				}
+				err = writer.Write(record)
+				if err != nil {
+					return err
+				}
+			}
+			// record := []string{
+			// 	movie.MovieName,
+			// 	strconv.Itoa(movie.MoiveIndex),
+			// 	strconv.Itoa(comment.UserRating),
+			// 	comment.UserComment,
+			// }
+			// err = writer.Write(record)
+			// if err != nil {
+			// 	return err
+			// }
+		}
+	}
+
+	return nil
+}
 func saveAsJson(movies []structs.MovieComments) {
 	// 序列化合并后的数组为 JSON 格式
 	mergedJSONData, err := json.MarshalIndent(movies, "", "    ")
