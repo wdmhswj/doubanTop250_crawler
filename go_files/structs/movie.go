@@ -26,7 +26,7 @@ type UserShortComment struct {
 type RankingList struct {
 	Name   string // 榜单名称
 	Url    string // 榜单首页url
-	Movies []Movie
+	Movies []Movie	
 }
 
 // 电影短评及评分的容器
