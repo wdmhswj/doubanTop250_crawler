@@ -29,3 +29,6 @@ go.work.sum
 
 # csv file
 *.csv
+
+# 字体文件
+*.ttf
